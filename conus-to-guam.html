@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USMC Accompanied CONUS to Guam Checklist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            background: white;
+            border-bottom: 2px solid #8B0000;
+            padding: 15px 20px;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #8B0000;
+        }
+
+        .progress-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #4CAF50;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            color: #666;
+            min-width: 50px;
+            text-align: right;
+        }
+
+        .reset-button {
+            background: #8B0000;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: background 0.2s;
+        }
+
+        .reset-button:hover {
+            background: #6b0000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            background: #8B0000;
+            color: white;
+            padding: 15px 20px;
+            font-weight: 700;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .section-header:hover {
+            background: #6b0000;
+        }
+
+        .section-header.complete {
+            background: #4CAF50;
+        }
+
+        .section-progress {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+
+        .section-progress-bar {
+            width: 60px;
+            height: 6px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .section-progress-fill {
+            height: 100%;
+            background: white;
+            transition: width 0.3s ease;
+        }
+
+        .subsection-header {
+            background: #505050;
+            color: white;
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .subsection-header:hover {
+            background: #3a3a3a;
+        }
+
+        .checklist-item {
+            display: grid;
+            grid-template-columns: 50px 1fr 2fr;
+            gap: 15px;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            align-items: flex-start;
+            transition: background-color 0.2s ease;
+        }
+
+        .checklist-item:nth-child(even) {
+            background: #fafafa;
+        }
+
+        .checklist-item.checked {
+            background: #d4edda;
+        }
+
+        .checklist-item.checked:nth-child(even) {
+            background: #c6e9d6;
+        }
+
+        .checkbox-col {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 4px;
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            appearance: none;
+            border: 2px solid #8B0000;
+            border-radius: 3px;
+            background: white;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+
+        .checkbox:hover {
+            border-color: #6b0000;
+            box-shadow: 0 0 4px rgba(139,0,0,0.2);
+        }
+
+        .checkbox:checked {
+            background: #8B0000;
+            border-color: #8B0000;
+        }
+
+        .checkbox:checked::after {
+            content: '✓';
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .label-col {
+            cursor: pointer;
+            font-weight: 600;
+            color: #333;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .checklist-item.checked .label-col {
+            text-decoration: line-through;
+            color: #555;
+        }
+
+        .content-col {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        .content-col a {
+            color: #8B0000;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .content-col a:hover {
+            text-decoration: underline;
+        }
+
+        .tip {
+            font-style: italic;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .content-list {
+            margin: 8px 0;
+            padding-left: 15px;
+        }
+
+        .content-list li {
+            margin: 4px 0;
+        }
+
+        .footer {
+            background: white;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer a {
+            color: #8B0000;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .checklist-item {
+                grid-template-columns: 40px 1fr;
+            }
+
+            .content-col {
+                grid-column: 2;
+            }
+
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .progress-section {
+                width: 100%;
+            }
+
+            .header-title {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sticky-header">
+        <div class="header-content">
+            <div class="header-title">USMC Accompanied CONUS to Guam Checklist</div>
+            <div class="progress-section">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="mainProgressFill" style="width: 0%;">
+                        <span id="mainProgressText"></span>
+                    </div>
+                </div>
+                <div class="progress-text" id="mainProgressCount">0 of 0</div>
+            </div>
+            <button class="reset-button" id="resetButton">Reset All</button>
+        </div>
+    </div>
+
+    <div class="container" id="checklistContainer"></div>
+
+    <div class="footer">
+        <p>This document was compiled with resources from Personal Property Activity, Military One Source, 2026 Peak Season MARADMIN, official USMC websites (including various DMO websites), AMC official travel site, and Joint Travel Regulations. To find the most commonly used resources, please visit the <a href="https://linktr.ee/usmc.pcs.advocacy.council" target="_blank">USMC PCS Advocacy Council Linktree</a>.</p>
+        <p style="margin-top: 10px; font-size: 11px; color: #999;">Edited May 2026</p>
+    </div>
+
+    <script>
+        const checklistData = [
+            {
+                section: "I. First Steps After Receiving Orders",
+                subsections: [
+                    {
+                        title: "Initial Actions (Process Immediately)",
+                        items: [
+                            {
+                                id: "check-orders",
+                                label: "Make sure your Orders are Accurate",
+                                subtitle: "(Do this immediately)",
+                                content: "As soon as you receive your orders, make sure all details are accurate. Check service member information, duty stations (present/future commands), family member details (names and birthdates), and reporting dates. Let your supporting admin office (S1/IPAC) know of any errors. Check to make sure dependents are specifically listed on your orders. If not, submit a formal request for \"Accompanied Orders\" through your chain of command. Ensure all endorsements with all funding lines of accounting are included.",
+                                tips: ["If you have a short-fuse shipment, contact your local DMO immediately.", "If you or a family member is enrolled in EFMP, initiate the EFMP checklist ASAP."]
+                            },
+                            {
+                                id: "calendar-organize",
+                                label: "Grab a Calendar & Get Organized",
+                                content: "Create a rough timeline for your move. Check the NLT (No Later Than) date on your orders and work backwards. Outline your preferred pack-out/pick-up dates, route, or flight dates along with alternative dates. Use one calendar as a central location for all things PCS-related. Your \"Move Date\" is your \"Pick Up Date\" — the date you would ideally like everything loaded. Choose a 7-day window. Enter the last day into DPS and the window will auto-populate. Pack Dates happen in the days immediately preceding your Pick Up Date — outside your 7-day spread but not on weekends or holidays without your permission.",
+                                tips: ["Once your shipment is awarded in DPS, the TSP must contact you within 3 days to confirm a pick-up date.", "For parents of school-age children: Confirm early withdrawal/late enrollment dates with current and prospective schools when choosing move dates."]
+                            },
+                            {
+                                id: "oss-process",
+                                label: "Initiate Overseas Suitability Screening (OSS) process",
+                                subtitle: "(Start immediately upon receipt of OCONUS orders)",
+                                content: "Start the Suitability Screening process immediately upon receipt of orders by contacting your assigned Area Suitability/Overseas Screening Coordinator or the nearest Medical Treatment Facility (MTF). The purpose of the OSS is to screen all family members of active duty and/or activated service members who request government-sponsored travel to OCONUS locations for potential travel concerns, which may include medical, educational, and/or dental needs, to ensure that the gaining location can meet their needs. Work with your assigned OSS Coordinator to meet all medical clearance requirements. Per BUMED Instruction 1300 2.B, the OSS process is required to be completed within 30 days for the service member(s) and 60 days for family member(s). Area clearance is NOT required when PCSing to Guam.",
+                                tips: ["For a guide on how to fill in the OSS forms, see this video from Camp Pendleton OSS office.", "General questions can be directed to the NEWLY established FMTS Cell.", "You will want to collect medical / dental records to hand carry to your new duty station.", "EFMP families: Contact your local EFMP office upon receipt of orders to ensure all paperwork is current. Ask for a PCS Needs Assessment and transition resources."]
+                            },
+                            {
+                                id: "mccs-relocation",
+                                label: "Sign up for an MCCS Relocation Class",
+                                subtitle: "(If available)",
+                                content: "Search for your local MCCS Information, Referral, & Relocation (IR&R) website to sign up. Per MCO 1754.10B, a PCS workshop is required for the service member and highly encouraged for the spouse.",
+                                tips: ["Visit the IR&R page to find your local office.", "A great resource if you are unable to attend: <a href='https://www.navsup.navy.mil/' target='_blank'>NAVSUP Counseling Webinar Videos</a>."]
+                            },
+                            {
+                                id: "obi-interview",
+                                label: "Submit your Outbound Interview (OBI)",
+                                content: "Sign into your Marine On-Line (MOL) account to complete your Outbound Interview (OBI). All Marines in receipt of PCS orders will utilize the OBI module within MOL. This covers all information needed by IPAC/admin to finalize PCS orders and will determine your travel entitlements. The OBI is used to finalize the flight booking process. Be sure to include your pet(s) in your OBI."
+                            },
+                            {
+                                id: "pet-info-pto",
+                                label: "Submit your Pet Information to your local Passenger Travel Office (PTO)",
+                                subtitle: "(If applicable, as soon as you know your general departure month)",
+                                content: "<strong>Only Cats & Dogs are considered pets per the purposes of the AMC-PE. You assume all risk associated with the transportation of your pet(s).</strong> Contact your local PTO (usually located within DMO) to submit your pet information including: Name of member traveling with pet, estimated travel window, type of pet, dimensions of crate, weight of pet, & total weight with crate/carrier. If you plan to PCS with a pet(s), this should be done as soon as you know your general departure month.",
+                                tips: ["You do not need orders to make AMC-PE reservation requests (MARADMIN 147/26).", "Pet reservations will be apportioned on a first come/first served basis. Space is limited on the AMC-PE, and there is no guarantee of a reservation no matter how early this process is initiated.", "As of 10 March 2026, all service members must sign and submit to PTO the AMC Risk Acknowledgement Document prior to receiving a pet spot on AMC.", "See 2026 Peak Season MARADMIN Section 8 on Transporting Pets.", "Pet reimbursement is now authorized up to $2,000 for one pet.", "As of May 1, 2026: If commercial travel is authorized, active duty and dependents may use a foreign flag carrier when no US flag air carrier is able to provide pet transportation; see JTR Section 050107 B.2."]
+                            },
+                            {
+                                id: "pet-import-guam",
+                                label: "Initiate the pet importation process for entry to Guam",
+                                subtitle: "(if applicable - this process may take around 6 months to complete)",
+                                content: "Make an appointment with your local Veterinarian (preferably a military Veterinary Treatment Facility (VTF) familiar with the process). Review the Guide for importing dogs or cats into Guam. This website lists all the requirements necessary to import your pet. Take it with you to your veterinary appointment. Reach out to Andersen AFB Pet Lodge to make your quarantine reservation. They will provide you with import requirements and contact information for the Guam Department of Agriculture.",
+                                tips: ["If flying commercial you may need to route through Hawaii and follow all of the Hawaii import regulations."]
+                            },
+                            {
+                                id: "request-sponsor",
+                                label: "Request a sponsor if you have not been assigned one",
+                                content: "Contact the Sponsorship Coordinator (SC) of your gaining command or your local IR&R Office. Per MCO 1320.11H, sponsors are to be of equal or higher pay-grade to arriving service members. Commands are encouraged to match marital status. Your sponsor should be in contact with you no less than 60 days prior to arrival and will assist with housing, local resources, and more. Your sponsor should receive Sponsorship Training (IR&R Office) in order to assist you."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                section: "II. Initial Helpful Resources",
+                subsections: [
+                    {
+                        title: "Resources & Organization",
+                        items: [
+                            {
+                                id: "facebook-websites",
+                                label: "Helpful Facebook Pages / Websites",
+                                content: "Visit these resources for PCS information: <a href='https://www.facebook.com/groups/USMCPCSSUPPORTPACIFICREGION' target='_blank'>USMC PCS Support Pacific Region</a> Facebook group, <a href='https://www.facebook.com/pages/US-Marine-Corps-Passenger-Transportation' target='_blank'>U.S. Marine Corps Passenger Transportation</a> Facebook Page, <a href='https://www.mcicom.marines.mil/' target='_blank'>MCICOM G4 PCS Support Website</a>, <a href='https://www.facebook.com/CampBlazNewJoins' target='_blank'>Camp Blaz New Joins</a>, <a href='https://www.facebook.com/AndersonAFBNewcomers' target='_blank'>Andersen AFB Newcomers</a>, Navy Household Goods/Personal Property website for all DoD personnel, <a href='https://www.militaryonesource.mil/' target='_blank'>Military One Source</a> OCONUS/Overseas Move guide, <a href='https://www.amc.af.mil/' target='_blank'>AMC Seattle Gateway website</a> for AMC-Patriot Express information, 2026 Peak Season MARADMIN, and <a href='https://www.move.mil/ppa' target='_blank'>Personal Property Activity (PPA)</a> — PCS 101 Complete Moving Guide."
+                            },
+                            {
+                                id: "move-binder",
+                                label: "Create a \"Move Binder\" with important documents",
+                                content: "Create a binder with all of your important documents in one place. Include: <strong>Military:</strong> copies of orders, flight itinerary, pet paperwork, detaching endorsement, etc. <strong>Personal:</strong> Social Security cards, medical/immunization/dental records, birth/marriage certificates, school records/transcripts/IEPs. <strong>Move paperwork:</strong> TSP inventory sheets, important receipts, vehicle storage paperwork, TLF (hotel) info, important contacts. <strong>Other:</strong> EFMP paperwork, college transcripts/licensure, naturalization certificates, divorce/adoption/guardianship/custody documents.",
+                                tips: ["Anything you would not want lost in the move should be hand-carried with you!"]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                section: "III. The Earlier, the Better (180–90 Days Out)",
+                subsections: [
+                    {
+                        title: "Planning & Preparation (180-90 Days Out)",
+                        items: [
+                            {
+                                id: "understand-weight",
+                                label: "Understand your HHG weight",
+                                content: "It is crucial the service member understands the total weight of HHG they are authorized. Entitlements can be verified in the DTR IV \"It's Your Move\" on page 5. Use the USTRANSCOM weight estimator tool. Pro Gear does not count against your total weight allowance. Net weight limit is 2,000 lbs. Marines may request an additional 500 lbs for Spouse Pro Gear, which includes items required for employment and homeschool materials. All Pro Gear requests MUST be submitted to the local PPO BEFORE the move.",
+                                tips: ["Gun safes (<500 lbs) are authorized to ship in addition to your authorized weight, not to exceed 18,000 lbs. Must be shipped empty.", "O6 and above must request additional weight allowance from their local TO/DMO.", "NEW (April 2026): Homeschooling materials may now be included as PBP&E (Pro Gear) — see JTR Appendix A."]
+                            },
+                            {
+                                id: "schedule-shipments",
+                                label: "Prepare to schedule your shipments",
+                                content: "As soon as you receive your orders, start with DMO for HHG applications to lock in pack-out and pick-up dates. Use the Installation Search option to find your nearest DMO (or Personal Property Office if not on a USMC base). If this is your first time moving, contact your local DMO first to receive instructions to create an account. Review the PPA: Personal Property Entitlements for specific details regarding prepping for your move.",
+                                tips: ["Unaccompanied Baggage (UB) max weight limit is 2,000 lbs per family regardless of rank or number of dependents for accompanied tours to Guam. (JTR Paragraph 051403)", "Be advised that houses in Guam tend to run smaller than typical US homes and personal storage is extremely limited. Consider these factors when deciding what to place in Non-Temporary Storage."]
+                            },
+                            {
+                                id: "schedule-dps",
+                                label: "Schedule your shipments in DPS",
+                                content: "Log into DPS to schedule your shipments. Each shipment will be submitted separately under the same order number. Have the following ready: Contact info, estimated weight, pick-up & delivery locations and dates (no weekends or holidays), and any special items/PBP&E (Pro Gear). Completing this step will generate your DD Forms. Review first, then sign. Contact your local DMO with any questions. Small Package PPMs are not the primary method of moving HHG OCONUS. However, small-package shipments (e.g. via USPS) are authorized if your shipments combined weights do not exceed your entitled weight.",
+                                tips: ["If you don't know your exact delivery address, use your new duty station (e.g., Yigo, Guam) and update once you arrive."]
+                            },
+                            {
+                                id: "vehicle-decision",
+                                label: "Start thinking about your vehicles: Will you ship or sell them?",
+                                content: "Visit <a href='https://pcsmypov.com/' target='_blank'>PCSmyPOV</a> to learn about POV (privately owned vehicle) shipping locations and to make an appointment for drop-off. You will need to notify DMO if you would like to ship a POV. Marines conducting a PCS move to Guam may be entitled to ship one POV at government expense. Contact your local DMO for information regarding POV entitlements and to prepare required documents. A second vehicle can be shipped at the member's expense. Electric vehicles CAN NOT be shipped to or from Guam."
+                            },
+                            {
+                                id: "passport-decision",
+                                label: "Determine if you will apply for a passport",
+                                content: "Guam is a U.S. territory, passports are not required for PCS travel. However, it is strongly recommended that eligible dependents obtain a no-fee passport, and active duty obtain a tourist passport, in case of emergency travel (e.g., medical evacuation or leave requiring transit through a foreign country). Please refer to the Foreign Clearance Guide (FCG) for further details."
+                            },
+                            {
+                                id: "ipac-entitlements",
+                                label: "Contact IPAC for Entitlement Questions",
+                                content: "Know your entitlements — call or visit your local IPAC to ask about: TLE (Temporary Lodging Expense): Authorized 7 days for CONUS-to-OCONUS moves. DLA (Dislocation Allowance): Partially reimburses for relocation expenses. Per Diem: Flat rate for each day of travel. SM may not receive both per diem and TLE for the same day. TLA (Temporary Lodging Allowance): Authorized OCONUS 10 days at a time while waiting for permanent housing. OHA (Overseas Housing Allowance): if allowed to apply for off-base housing. GTCC: Know your limit. Ask your S-1/ODTA if you need to raise your limit. Ensure it is activated and in mission-critical status prior to departure. LICWO: Contact your chain of command regarding leave in conjunction with orders."
+                            },
+                            {
+                                id: "create-budget",
+                                label: "Create a budget",
+                                content: "Come up with a spending plan. There will be some up-front costs that will be reimbursed later, but also plan for start-up expenses once you arrive (pantry, cleaning supplies, utilities). Do not forget to request Dislocation Allowance (DLA) on your travel voucher once your PCS is complete. Advanced DLA is no longer authorized if the active duty Marine has a GTCC."
+                            },
+                            {
+                                id: "communicate-sponsor",
+                                label: "Communicate with your Sponsor",
+                                content: "Provide your sponsor with the following: A copy of your PCS orders, Your travel itinerary, Special Power of Attorney (SPOA) (optional): Granting the SPOA to your sponsor will allow them to do many things on your behalf before you arrive. The key to a smooth PCS is communication with your sponsor and gaining unit."
+                            },
+                            {
+                                id: "sort-household",
+                                label: "Start sorting your Household Items",
+                                content: "Decide what you will ship, hand carry, and what you will purge. Homes are smaller in Guam, and storage upon arrival is limited. Set aside items not authorized to be moved or stored. See Appendix A-I \"Hazardous Materials\". Your TSP may have additional restrictions — discuss during your Pre-Move Survey."
+                            },
+                            {
+                                id: "renew-license",
+                                label: "Renew your Driver's License",
+                                subtitle: "(if applicable)",
+                                content: "Check to ensure your driver's license will be valid for your whole tour in Guam. If your license expires while in Guam, you will be required to get a Guam license and the process can take over a year. Ask your sponsor for additional information.",
+                                tips: ["If using your driver's license to access a military installation or flying, a Real ID is required."]
+                            },
+                            {
+                                id: "renew-military-id",
+                                label: "Renew your Military ID",
+                                subtitle: "(if applicable)",
+                                content: "Dependents will need the active duty service member present to renew a military ID. Dependents without a Sponsor present must have a valid DD Form 1172-2 signed by the Sponsor and a Verifying Official (valid 90 days from signature). Power of Attorney accepted if it states DEERS or Military ID card related transactions. See Military One Source for potentially renewing online."
+                            },
+                            {
+                                id: "schedule-flights",
+                                label: "Schedule Flights with your local Passenger Travel Office (PTO)",
+                                subtitle: "(PTO is usually located within DMO)",
+                                content: "Upon receiving PCS orders, you can initiate the flight process: 1) Complete your Outbound Interview (OBI) through your MOL Account 2) Contact your local PTO to submit AMC travel/pet travel request 3) Your Admin/S-1 will review your OBI and submit your request to IPAC Outbound 4) Once you complete the interview with IPAC outbound, IPAC will send DMO a PortCall Request (PCR) with your family's information along with a flight window that includes two AMC dates. DMO will then respond to IPAC's PCR with a Port Call Confirmation (flight itinerary) 5) Transportation is issued after receiving endorsement Orders. AMC-PE should always be considered first before utilizing commercial options. A statement of non-availability and/or a negative critical mission impact statement signed by an O5 or above is required prior to flying commercial air.",
+                                tips: ["Note: this step takes some time and you cannot be officially booked on AMC-PE until on/around the 90-120-day window when flights are released by USTRANSCOM. Initiate and move to the next step.", "Are you taking leave? Schedule your LICWO (Leave in Conjunction with Orders) travel. The new supplemental circuitous/LICWO travel policy allows you to self-procure travel with the servicing Travel Management Company (MARADMIN 470/23).", "If storing a vehicle? You may have the option to leave from the VPC (Vehicle Processing Center)."]
+                            },
+                            {
+                                id: "research-airlines",
+                                label: "Research your airlines",
+                                content: "If traveling AMC-PE (Seattle to Guam), visit the <a href='https://www.amc.af.mil/' target='_blank'>AMC Travel Site</a> and <a href='https://www.amc.af.mil/Home/PublicAffairs/Article/2891597/amc-patriot-express/' target='_blank'>AMC Pet Travel Site</a>. AMC-PE leaves from Seattle and will have multiple stops before your final destination to Guam. You may also have a commercial leg booked to get to Seattle/AMC. Make sure you research the commercial requirements for baggage and pets. You are responsible for calling the commercial airline to arrange your pet travel to Seattle. If traveling commercial, check with your airline for baggage allowance and pet information.",
+                                tips: ["Let your sponsor/gaining unit know as soon as your plans are finalized, so they can prepare for your arrival!"]
+                            },
+                            {
+                                id: "hotel-reservations",
+                                label: "Make hotel reservations at new/old PDS",
+                                content: "Check with base accommodations first and obtain a certificate of non-availability if applicable. If you require a pet-friendly hotel, contact the hotel directly for policy and reservation."
+                            },
+                            {
+                                id: "notify-landlord",
+                                label: "Notify your landlord or prepare to sell/rent your home",
+                                content: "Once you know your estimated moving dates, make a plan for your current home. Notify your landlord or make plans to sell/find renters if living in off-base housing. Remember: the Servicemember Civil Relief Act may apply."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                section: "IV. The Earlier, The Better (90–30 Days Out)",
+                subsections: [
+                    {
+                        title: "Mid-Timeline Preparation (90-30 Days Out)",
+                        items: [
+                            {
+                                id: "housing-application",
+                                label: "Submit your Housing Application",
+                                content: "There is no family housing on Camp Blaz. Marines have the option to live on Andersen AFB, Navy Base Guam, or off base. All housing is run through the Navy and starts with the HEAT application. Your sponsor should assist you with the housing process at your new duty station: <a href='https://www.andersen.af.mil/About-Us/Housing/' target='_blank'>Andersen AFB Housing Website</a> and <a href='https://www.cnic.navy.mil/guam/' target='_blank'>Navy Base Guam Website</a>."
+                            },
+                            {
+                                id: "medical-records",
+                                label: "Collect Medical / Dental Records",
+                                content: "Request copies of pertinent immunization, dental, and other medical records — or request your doctor's office send them directly to your new MTF/PCM. This process can take time, so notify providers well in advance."
+                            },
+                            {
+                                id: "school-liaison",
+                                label: "Contact the School Liaison",
+                                subtitle: "(if applicable)",
+                                content: "Locate and contact the School Liaison for school registration information at your new duty station. Your current duty station can also provide assistance."
+                            },
+                            {
+                                id: "child-dev-center",
+                                label: "Contact the Child Development Center (CDC)",
+                                subtitle: "(if applicable)",
+                                content: "CDCs often have waitlists. Find the CDC at your new duty station. Visit <a href='https://www.militarychildcare.com/' target='_blank'>www.militarychildcare.com</a> to add your child(ren) to a waitlist. Subsidies are available in some areas — visit <a href='https://www.childcareaware.org/' target='_blank'>Childcare Aware</a> for more information. Be aware of the Pilot Program to Reimburse Child Care Provider Transportation Costs Due to a PCS (JTR 050108)."
+                            },
+                            {
+                                id: "ship-pov",
+                                label: "Schedule an appointment to ship your POV",
+                                subtitle: "(if applicable)",
+                                content: "Make an Appointment to ship your POV. Appointments are required. Marines must also be able to validate that all safety recall repairs have been performed. Customers have the option to conduct a self-storage of their POV and submit a reimbursement claim. Ask your Personal Property Office Counselor for the current reimbursement rate for storage of the POV."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                section: "V. The Last 30 Days Prior to Leaving Old Duty Station",
+                subsections: [
+                    {
+                        title: "Final Preparations Before Departure",
+                        items: [
+                            {
+                                id: "confirm-pet-import",
+                                label: "Confirm pet import process is near completion",
+                                content: "Ensure you have reviewed all steps to importing pets into Guam. You will need to ensure you obtain a health certificate prior to leaving CONUS that is valid within 10 days of arrival to Guam."
+                            },
+                            {
+                                id: "cell-phone-plans",
+                                label: "Think about your cell phone plans",
+                                content: "Your sponsor can help identify the different cell phone options. Consider having a plan or temporary travel plan that will allow you to have phone service immediately off the plane. If you do get rid of your US phone number, switch any two-factor authentication accounts to a trusted phone number."
+                            },
+                            {
+                                id: "notify-banks",
+                                label: "Notify credit card companies / banks",
+                                content: "Notify your credit card companies and banks that you are moving. Pay any outstanding bills or set up autopay while you are in transit to your new duty station."
+                            },
+                            {
+                                id: "change-address",
+                                label: "Submit Change of Address",
+                                content: "It can take 7–10 business days to forward a mailing address through USPS. If you do not have a new address yet, consider placing a hold on your mail or forwarding to a family member temporarily."
+                            },
+                            {
+                                id: "share-address",
+                                label: "Share your forwarding address with providers",
+                                content: "Update your new address with healthcare providers and any other local services you utilize as soon as you have it so that outstanding bills can be forwarded directly to you."
+                            },
+                            {
+                                id: "cancel-utilities",
+                                label: "Cancel utilities / delivery services",
+                                content: "Check any subscriptions, utilities, or delivery services you may have and cancel or update your address."
+                            },
+                            {
+                                id: "gtcc-status",
+                                label: "Double-check GTCC status",
+                                content: "Check with your S1/Admin/ODTA to make sure your GTCC is activated and in \"mission critical\" status prior to travel."
+                            },
+                            {
+                                id: "renters-insurance",
+                                label: "Consider renters insurance",
+                                content: "Speak to your current US based insurance provider to see if they offer renters insurance while living overseas. Some companies do, but it must be set up prior to you leaving CONUS."
+                            },
+                            {
+                                id: "unit-checkout",
+                                label: "Begin Unit Check-Out Process",
+                                content: "The active duty Marine will begin the check-out process typically within 30 days of departure. Ensure you ask any last-minute questions regarding entitlements during this time."
+                            },
+                            {
+                                id: "separate-luggage",
+                                label: "Separate suitcases and items you will be traveling with",
+                                content: "Consider blocking off a section of your home clearly labeled \"DO NOT MOVE.\" Set aside suitcases (for travel), trash, and donations. Confirm your baggage allowance for your particular airline to ensure you do not set aside too much luggage. Keep passports, move binder, purses, etc. out of reach of movers — consider placing them in your car. Don't forget medications, along with refills to get you through the relocation process. Start setting aside snacks and entertainment, especially if traveling with children!"
+                            },
+                            {
+                                id: "tricare",
+                                label: "Tricare",
+                                content: "Stay enrolled in your current TRICARE plan. You will transfer to TRICARE Prime Overseas coverage after you arrive at your new location. Fill or refill any prescriptions to carry you through your relocation period."
+                            },
+                            {
+                                id: "final-cleaning",
+                                label: "Final housing cleaning and inspection",
+                                content: "Clean your home and ensure none of your personal belongings are left behind. Complete your home inspection (if applicable), turn in the keys, and say goodbye to your neighbors!"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                section: "VI. Travel to your New PDS - Prepping for Packout/Pickup",
+                subsections: [
+                    {
+                        title: "Packout and Pickup Preparation",
+                        items: [
+                            {
+                                id: "confirm-tsp-dates",
+                                label: "Confirm dates with your TSP",
+                                content: "Contact your TSP to confirm all dates. Pack-out dates are the days leading up to your pickup date (varies by estimated weight). The pick-up date is the day your items are placed on the truck."
+                            },
+                            {
+                                id: "pre-move-survey",
+                                label: "Complete your Pre-Move Survey",
+                                content: "Call your TSP or DMO if you are within one week of moving day and have not had a PreMove Survey completed. The assigned TSP will contact you to schedule — usually done at your home or over the phone. They will estimate weight and identify special items entered in DPS."
+                            },
+                            {
+                                id: "military-one-source-tips",
+                                label: "Read Tips from Military One Source & PPA",
+                                content: "Read the Military One Source \"Prepping your move\" tips & <a href='https://www.move.mil/ppa' target='_blank'>PPA: Moving and Packing Tips</a>."
+                            },
+                            {
+                                id: "organize-shipments",
+                                label: "Organize and separate UB/HHG/NTS",
+                                content: "Have separate rooms for each shipment keeps items organized so items are not mispacked in the wrong shipment. TSPs may have their own policies surrounding spices, sealed foods, and other consumable items. Drain lawnmower, tape remotes to electronics, remove all batteries, remove all items from walls (curtains, pictures, TVs), disassemble outdoor playsets, move items out of attic/crawl space, and ensure all appliances are disconnected. Shipping alcohol is authorized per MARADMIN 289/19. Documentation is required to be submitted in advance. Lithium-Ion Batteries (as of May 2023): Restricted to <100Wh per battery. All lithium batteries must be packaged and labeled separately. No lithium batteries are authorized to be stored in NTS.",
+                                tips: ["Create your own inventory: Start with your highest-value items. Keep all receipts, get appraisal records, and take photos/videos prior to packing. Video record electronics/appliances in working condition and photograph serial number plates. Keep a copy of your inventory in your move binder."]
+                            },
+                            {
+                                id: "prepare-ub",
+                                label: "Prepare your Unaccompanied Baggage (UB) Shipment",
+                                content: "Accompanied tours from CONUS to Guam are 2,000lbs for UB. (JTR Paragraph 051403) The UB shipment may get to your new location faster than your Household Goods (HHG) shipment. This should include any items you will want as soon as you arrive while waiting for the rest of your belongings. What you can ship as UB: Personal clothing/shoes, Kitchenware (Essential pots, pans, utensils, etc.), light household items (sheets, towels, pillows, comforters), Collapsible items such as cribs, playpens, and strollers, items to care for your dependents, and other household basics. What you cannot ship in UB: Appliances (washers/dryers/refrigerators), furniture, items of extraordinary value.",
+                                tips: ["Transit time is usually ~1-3 months; this is flown space available and not guaranteed to arrive prior to HHG.", "If airlines accepts shipment of lithium batteries, the shipment limitations are two lithium batteries per shipment."]
+                            },
+                            {
+                                id: "prepare-hhg",
+                                label: "Prepare your Household Goods (HHG) Shipment",
+                                content: "You should have learned your total weight allowance from the forms that were generated through DPS. HHG may take longer than the UB shipment. It will usually take a few months to arrive in Guam. This is the rest of your belongings that will be going to your new duty station- including all of your furniture. You will be offered temporary furniture when you arrive if you are still waiting for your HHG. If you are importing alcohol, firearms, or a motorcycle be sure to know the crate number and exact location of those items in the crate. Ask your movers to set these items aside and load them all into the front of one crate if possible. Upon arrival in Guam, you will be required to go to the warehouse where they will unseal your crate and place these items into secure customs storage until a Customs Officer is available to meet with you and complete the import of your items. Alcohol import is limited to 1 gallon per adult on order. Alcohol in excess will be subject to Duty Tax plus the cost of ocean freight for the entire shipment.",
+                                tips: ["Transit time is usually ~2-3 months."]
+                            },
+                            {
+                                id: "prepare-nts",
+                                label: "Prepare your Non-Temporary Storage (NTS) Shipment",
+                                content: "These are items that will remain stateside for the duration of your OCONUS tour. Almost anything you do not want to take with you can be stored in NTS for the duration of your overseas tour. Examples: bulky furniture that might not fit, garage items, recreational gear that you might not have room to store, large appliances like washer/dryer/refrigerator (these are provided by base appliances through the housing office). Remember: houses are smaller in Guam and storage is limited. When you return to the US and establish a new address, you can request release and delivery of these stored belongings to your next PDS or destination. It is suggested to schedule your pack-out/pick-up for NTS last. Customers have the option to conduct a self-storage NTS and receive reimbursement through the travel tab in MOL.",
+                                tips: ["Lithium batteries of all kinds are PROHIBITED in NTS."]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                section: "VII. Packout / Pickup Days",
+                subsections: [
+                    {
+                        title: "Moving Day Operations",
+                        items: [
+                            {
+                                id: "important-phone",
+                                label: "Know your Important Phone Numbers",
+                                content: "Have these numbers readily available: DMO (call for questions before your move, entitlement questions, scheduling counseling, issues with the moving company, date/location changes, or to postpone/cancel a shipment). Quality Assurance (QA) (call for moving day issues). Moving Company / TSP (check DPS for contact info). Origin JPPSO (call for date/location changes, postpone/cancel a shipment, or request shipment status). Personal Property Activity (PPA) (contact if unable to reach local DMO, operates 24/7 during peak season). Find your local DMO at <a href='https://www.move.mil/ppa' target='_blank'>PPA Customer Service Contacts</a>."
+                            },
+                            {
+                                id: "moving-rights",
+                                label: "Moving day rights & responsibilities",
+                                content: "Know your rights and responsibilities per DTR IV K1 Section X. Your team may arrive between 8:00 AM – 5:00 PM on pack, pickup, and delivery dates. You are required to be at the residence during this time. Your team must finish by 5:00 PM, unless approved by the customer, then they may remain until 9:00 PM."
+                            },
+                            {
+                                id: "moving-tips",
+                                label: "Review Moving Day Tips",
+                                content: "Keep move binder, purses, medications, jewelry, and valuables locked away or with you at all times. Make a plan for small children and/or pets while movers are packing. It is not required to tip or feed the moving crew, but providing water/refreshments is a kind gesture. The driver is usually in charge. Talk with the driver first if issues arise. If unresolved, call your local DMO or QA. The moving company will create an inventory and put stickers on all boxes/larger items. They will indicate pre-existing damage. Check the condition codes. If you disagree, write it in the remarks section. Do not sign the inventory sheet until you understand and agree with everything listed.",
+                                tips: ["See more moving day tips from Military One Source.", "Real Property Damage: If the TSP damages your residence, visit the claims factsheet and follow the steps under \"Residential Damage Claims.\"."]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                section: "VIII. Shipping your POV",
+                subsections: [
+                    {
+                        title: "Vehicle Shipping",
+                        items: [
+                            {
+                                id: "confirm-pov-appt",
+                                label: "Confirm your PCSmyPOV Appointment",
+                                content: "Login to the <a href='https://pcsmypov.com/' target='_blank'>PCSmyPOV website</a> to find information about your appointment. You can search by your appointment number to edit or cancel an existing appointment. Refer to the <a href='https://www.dtic.mil/whs/directives/corres/pdf/41221p.pdf' target='_blank'>DTR for Shipping your POV</a>.",
+                                tips: ["Appointments during peak season (May-Aug) are difficult to get, so try not to cancel or request a new date/time to turn in your POV."]
+                            },
+                            {
+                                id: "turn-in-vehicle",
+                                label: "Turning in your Vehicle",
+                                content: "You will need a letter from DMO to turn your vehicle into the VPC (Vehicle Processing Center). Visit PCSmyPOV to learn all about the POV Turn-In process and important documents to bring. KEY REQUIREMENTS FOR POV TURN-IN: Valid set of orders/amendments, Written approval from leasing or lienholder authorizing export, Government/State issued identification, Proof of vehicle ownership (title or registration), No unresolved Recall Notices, Fuel at ¼ tank or less, A complete set of keys, to include gas cap and wheel locks (valet keys are not accepted), Installed auto alarm or anti-theft devices turned off or disconnected, POV is clean and in a safe and operable condition, POV meets host nation emission control and safety standards (listed in the PPCIG). You will also want to understand your POV Customer Bill of Rights."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                section: "IX. NLT 72 Business Hours Before Travel",
+                subsections: [
+                    {
+                        title: "Pre-Travel Final Steps",
+                        items: [
+                            {
+                                id: "flights-ticketed",
+                                label: "Make sure commercial flights are TICKETED",
+                                content: "Call PTO to confirm your commercial flights are ticketed. There is a difference between having reservations for your commercial flight and being ticketed for your commercial flight. Your reservation (commercial itinerary) will be forwarded to you for your flight to Seattle. If everything is correct such as location, spelling of names, and birthdates, the traveler will call the Travel Management Company (SATO) to purchase tickets. Once your flight is paid for, a commercial ticket will be issued. This travel is normally paid for (with your GTCC) and ticketed within 3 business days prior to departure OR on a case-by-case basis at the Marine's request upon detaching from your unit if earlier ticketing is needed. AMC-PE travel is paid for by the appropriation data on your orders and does not require GTCC."
+                            },
+                            {
+                                id: "flight-itinerary",
+                                label: "Double check all flight itineraries for checkin/flight information",
+                                content: "If flying AMC-PE: Follow the <a href='https://www.amc.af.mil/' target='_blank'>AMC Seattle Gateway webpage</a> for flight delays and updates. Re-visit <a href='https://www.amc.af.mil/' target='_blank'>AMC Travel Site</a> and <a href='https://www.amc.af.mil/Home/PublicAffairs/Article/2891597/amc-patriot-express/' target='_blank'>AMC Pet Travel Page</a>. Check-in for the AMC-PE is usually very early in the morning. If flying Commercial: It is your responsibility to check with your commercial airlines for baggage, pet, and other airline specific policies."
+                            },
+                            {
+                                id: "pet-documentation",
+                                label: "Double check all important pet documentation",
+                                content: "Bring ALL pet documentation if traveling with a pet (and multiple copies): Microchip, Vaccines (signed in blue ink), Fluorescent Antibody Virus Neutralization (FAVN) rabies blood test, Health Certificate"
+                            },
+                            {
+                                id: "welcome-aboard",
+                                label: "Sign up for Welcome Aboard brief",
+                                content: "Your sponsor should help sign you up for the welcome aboard briefs. There are briefs on both Andersen AFB and Navy Base Guam."
+                            },
+                            {
+                                id: "final-sponsor-contact",
+                                label: "Communicate with your Sponsor",
+                                content: "Communicate your travel arrangements/arrival times/lodging with your sponsor/gaining unit, write down their phone numbers, and make sure you have communicated your family needs prior to arrival."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                section: "X. After Arriving to your New PDS",
+                subsections: [
+                    {
+                        title: "Arrival & Settlement",
+                        items: [
+                            {
+                                id: "check-in-tlf",
+                                label: "Check into TLF",
+                                content: "Execute plan to have sponsor or unit rep pick you up from airport / AMC terminal; or pre-coordinate taxi pick-up and take you to Temporary Lodging Facility (TLF)."
+                            },
+                            {
+                                id: "commissary-px",
+                                label: "Commissary / PX Run",
+                                content: "Take taxi or have sponsor drive you to the commissary / PX, as well as show you on-base restaurant options."
+                            },
+                            {
+                                id: "check-in-unit",
+                                label: "Check-in with Unit",
+                                content: "Your sponsor should assist with the check-in process and introduce you to your gaining command."
+                            },
+                            {
+                                id: "update-alert",
+                                label: "Update credentials with Alert!",
+                                content: "Ensure your Alert! profile is updated to reflect your new duty station."
+                            },
+                            {
+                                id: "tricare-overseas",
+                                label: "Tricare",
+                                content: "TRICARE Prime Overseas is available to active duty service members and their command-sponsored family members living together in non-remote overseas locations. See <a href='https://www.tricare.mil/' target='_blank'>TRICARE Prime Overseas Enrollment Information</a>."
+                            },
+                            {
+                                id: "finalize-housing",
+                                label: "Finalize housing",
+                                content: "If housing is not finalized before arrival, work with your sponsor to finalize housing requirements to be assigned housing."
+                            },
+                            {
+                                id: "inbound-interview",
+                                label: "Complete Inbound Interview (IBI) and Travel Voucher NLT 5 days after arrival",
+                                content: "This will update your pay and entitlements. Ensure you submit any reimbursable receipts (pet fees, TLE, etc.) and select yes to receiving Dislocation Allowance (DLA). TLE may require a supplemental voucher depending on length of stay."
+                            },
+                            {
+                                id: "pay-entitlements",
+                                label: "Follow-up with pay and entitlement payouts",
+                                content: "Check weekly on MOL travel tab for status updates on the travel voucher. Ensure all entitlements were paid at the correct rate."
+                            },
+                            {
+                                id: "welcome-brief",
+                                label: "Welcome Aboard Brief",
+                                content: "Attend the welcome aboard brief if you signed up to attend."
+                            },
+                            {
+                                id: "familiarize-base",
+                                label: "Familiarize yourself with your new base",
+                                content: "Utilize the many resources on base such as Outdoor Recreation, Military Family Readiness Center (Andersen AFB), Fleet and Family Services (Navy Base Guam), New Parent Support, and more. Orient yourself to the Commissary, Exchange, Post Office, and restaurants. MCB Camp Blaz is still under construction and the main cantonment area is closed to all unauthorized personnel. MCB Camp Blaz will occasionally host tours for families. Contact your sponsor for additional information."
+                            },
+                            {
+                                id: "transition-tlf",
+                                label: "Transition from TLF to your permanent residence",
+                                content: "If you have several pieces of luggage, ask your sponsor or unit to assist with moving your belongings into your home."
+                            },
+                            {
+                                id: "accept-shipments",
+                                label: "Accept your Personal Property Shipments (UB, HHG)",
+                                content: "Communicate which items you would like the delivery crew to unpack: You have a couple of options, and you should communicate your personal choice with the TSP ahead of time or in DPS. 1) A full unpack: Movers empty all boxes into specified rooms; on a flat surface. They are not required to organize or put items away. If you would like a full unpack, you need to include that in the remarks blocks in DPS Counseling: \"FULL UN-PACK REQUIRED\" 2) A partial un-pack: Movers only open boxes in select areas. 3) Movers assemble furniture that they took apart at the origin (beds, couches, etc.) 4) If you refuse a full unpack, the TSP is not obligated to return to remove packing materials.",
+                                tips: ["Your TSP should notify you directly when your shipments are ready for delivery (via email).", "Know the Required Delivery Date (RDD) which can be found in DPS.", "Check out the \"What to do when the moving company arrives\" section in Military OneSource.", "Should mold be discovered at ANY point during delivery, HALT DELIVERY. All items must be loaded back onto the truck and further inspected at the warehouse.", "Use the inventory sheet to check off the numbers and ensure that everything is delivered. As the boxes/items come off the truck, you should direct them where they should be placed.", "Once the truck is empty, you should verify on the inventory sheet that everything has been delivered. If not, those items need to be annotated on the inventory sheet before you sign off. Any lost/damaged items should be listed on the \"Loss or Damage at Delivery\" form provided by the driver."]
+                            },
+                            {
+                                id: "loss-damage-report",
+                                label: "Submit a Loss / Damage Report",
+                                content: "See <a href='https://www.move.mil/ppa' target='_blank'>PPA: The Claims Process</a> for a full explanation of the claims process from start to finish. Note: A Loss/Damage Report is different from an actual claim. You will still need to file a claim for lost or damaged items. Complete DD Form 1840 with your TSP at the time of delivery if any damage is seen at delivery. If any HHG are lost or damaged, you are entitled to full replacement value (FRV). 1) Inspect all items. 2) Note obvious losses/damages and ask the driver to complete and sign DD Form 1840. 3) Acknowledge receipt of all high-value items. 4) Review all inventories and forms before signing. You can also submit a Loss/Damage report AFTER DELIVERY. For shipments picked up on or before May 14, 2026: 9-month filing period. For shipments on or after May 15, 2026: 12-month filing period."
+                            },
+                            {
+                                id: "itemized-claim",
+                                label: "File an itemized claim for Loss/Damage",
+                                content: "Log in to DPS to submit a Claim for Loss/Damage. A Loss/Damage Report is NOT a claim — you must submit a separate itemized claim in DPS for every item lost or damaged. Gather before submitting: Manufacturer, brief description, inventory item number, cost at purchase and year, description of damage, proof of value/condition, photos & receipts (if available). For quick reference throughout the process, please refer to the claims fact sheet on PPA. Note: For real property damage, you will submit this type of claim directly to the TSP. Questions? Contact the Navy Personnel Claims Unit at (888) 897-8217, (757) 440-6315, or norfolkclaims@navy.mil. Remember: this is a negotiation. If you are not happy with an offer, you should reject it."
+                            },
+                            {
+                                id: "inconvenience-claim",
+                                label: "File an Inconvenience Claim",
+                                content: "Contact your TSP to file an Inconvenience Claim if HHG are not picked up/delivered by the Required Delivery Date (RDD). NEW for 2026: Reimbursement is now 100% of the M&IE per diem rate for the customer. For moves picked up on or after May 15, 2026, all dependents traveling on approved funded relocation orders are also authorized reimbursement at 75% of M&IE."
+                            },
+                            {
+                                id: "satisfaction-survey",
+                                label: "Complete the Customer Satisfaction Survey (CSS)",
+                                content: "Complete the CSS for EACH shipment executed during the PCS. The CSS consists of eight questions and allows you to rate your TSP. HQMC reviews all ratings and holds moving companies accountable. See Fact Sheet. Complete via the link in the automated email you will receive after delivery."
+                            },
+                            {
+                                id: "enjoy-guam",
+                                label: "Finally, enjoy all that Guam has to offer!",
+                                content: "Research local festivals, language classes, cultural events, restaurants, and more. You put a lot of work into your move, now take some time to enjoy your new duty station overseas! For events and outings and classes on the northern half of the island check out <a href='https://www.andersen.af.mil/' target='_blank'>MWR Andersen AFB</a>, for the southern half of the island look into <a href='https://www.cnic.navy.mil/guam/' target='_blank'>MWR Navy Base Guam</a>. Both bases host monthly tours of the island."
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        class ChecklistManager {
+            constructor() {
+                this.data = checklistData;
+                this.checkboxStates = this.loadStates();
+            }
+
+            loadStates() {
+                const saved = localStorage.getItem('checklistStates');
+                return saved ? JSON.parse(saved) : {};
+            }
+
+            saveStates() {
+                localStorage.setItem('checklistStates', JSON.stringify(this.checkboxStates));
+                this.updateProgress();
+            }
+
+            toggleItem(id) {
+                this.checkboxStates[id] = !this.checkboxStates[id];
+                this.saveStates();
+            }
+
+            getItemState(id) {
+                return this.checkboxStates[id] || false;
+            }
+
+            reset() {
+                if (confirm('Are you sure you want to reset all checkmarks? This cannot be undone.')) {
+                    this.checkboxStates = {};
+                    localStorage.removeItem('checklistStates');
+                    this.render();
+                    this.updateProgress();
+                }
+            }
+
+            getAllItems() {
+                let items = [];
+                this.data.forEach(section => {
+                    section.subsections.forEach(subsection => {
+                        items = items.concat(subsection.items);
+                    });
+                });
+                return items;
+            }
+
+            getSectionItems(sectionIndex) {
+                let items = [];
+                if (this.data[sectionIndex]) {
+                    this.data[sectionIndex].subsections.forEach(subsection => {
+                        items = items.concat(subsection.items);
+                    });
+                }
+                return items;
+            }
+
+            getCompletedCount() {
+                return Object.values(this.checkboxStates).filter(v => v === true).length;
+            }
+
+            updateProgress() {
+                const allItems = this.getAllItems();
+                const completed = this.getCompletedCount();
+                const total = allItems.length;
+                const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+                const mainFill = document.getElementById('mainProgressFill');
+                const mainText = document.getElementById('mainProgressText');
+                const mainCount = document.getElementById('mainProgressCount');
+
+                mainFill.style.width = percent + '%';
+                mainText.textContent = percent > 10 ? percent + '%' : '';
+                mainCount.textContent = `${completed} of ${total}`;
+
+                // Update section headers
+                this.data.forEach((section, sectionIndex) => {
+                    const sectionItems = this.getSectionItems(sectionIndex);
+                    const sectionCompleted = sectionItems.filter(item => this.checkboxStates[item.id]).length;
+                    const sectionPercent = sectionItems.length > 0 ? Math.round((sectionCompleted / sectionItems.length) * 100) : 0;
+
+                    const header = document.querySelector(`[data-section="${sectionIndex}"]`);
+                    if (header) {
+                        const progressBar = header.querySelector('.section-progress-fill');
+                        if (progressBar) {
+                            progressBar.style.width = sectionPercent + '%';
+                        }
+
+                        const progressText = header.querySelector('.section-progress');
+                        if (progressText) {
+                            progressText.textContent = `${sectionCompleted}/${sectionItems.length}`;
+                            const newProgressBar = document.createElement('div');
+                            newProgressBar.className = 'section-progress-bar';
+                            const newProgressFill = document.createElement('div');
+                            newProgressFill.className = 'section-progress-fill';
+                            newProgressFill.style.width = sectionPercent + '%';
+                            newProgressBar.appendChild(newProgressFill);
+                            progressText.innerHTML = `${sectionCompleted}/${sectionItems.length} `;
+                            progressText.appendChild(newProgressBar);
+                        }
+
+                        if (sectionPercent === 100) {
+                            header.classList.add('complete');
+                        } else {
+                            header.classList.remove('complete');
+                        }
+                    }
+                });
+            }
+
+            render() {
+                const container = document.getElementById('checklistContainer');
+                container.innerHTML = '';
+
+                this.data.forEach((section, sectionIndex) => {
+                    const sectionDiv = document.createElement('div');
+                    sectionDiv.className = 'section';
+
+                    const sectionItems = this.getSectionItems(sectionIndex);
+                    const sectionCompleted = sectionItems.filter(item => this.checkboxStates[item.id]).length;
+
+                    const headerDiv = document.createElement('div');
+                    headerDiv.className = 'section-header';
+                    headerDiv.setAttribute('data-section', sectionIndex);
+
+                    const titleSpan = document.createElement('span');
+                    titleSpan.textContent = section.section;
+
+                    const progressDiv = document.createElement('div');
+                    progressDiv.className = 'section-progress';
+                    progressDiv.innerHTML = `${sectionCompleted}/${sectionItems.length} <div class="section-progress-bar"><div class="section-progress-fill" style="width: ${sectionItems.length > 0 ? Math.round((sectionCompleted / sectionItems.length) * 100) : 0}%"></div></div>`;
+
+                    headerDiv.appendChild(titleSpan);
+                    headerDiv.appendChild(progressDiv);
+                    sectionDiv.appendChild(headerDiv);
+
+                    section.subsections.forEach(subsection => {
+                        const subsectionHeader = document.createElement('div');
+                        subsectionHeader.className = 'subsection-header';
+                        subsectionHeader.textContent = subsection.title;
+                        sectionDiv.appendChild(subsectionHeader);
+
+                        subsection.items.forEach((item, itemIndex) => {
+                            const itemDiv = document.createElement('div');
+                            itemDiv.className = 'checklist-item';
+                            if (this.checkboxStates[item.id]) {
+                                itemDiv.classList.add('checked');
+                            }
+
+                            const checkboxCol = document.createElement('div');
+                            checkboxCol.className = 'checkbox-col';
+                            const checkbox = document.createElement('input');
+                            checkbox.type = 'checkbox';
+                            checkbox.className = 'checkbox';
+                            checkbox.checked = this.checkboxStates[item.id] || false;
+                            checkbox.addEventListener('change', () => {
+                                this.toggleItem(item.id);
+                                this.updateItemUI(item.id);
+                            });
+                            checkboxCol.appendChild(checkbox);
+
+                            const labelCol = document.createElement('div');
+                            labelCol.className = 'label-col';
+                            const labelText = document.createElement('div');
+                            labelText.textContent = item.label;
+                            if (item.subtitle) {
+                                const subtitleDiv = document.createElement('div');
+                                subtitleDiv.style.fontSize = '12px';
+                                subtitleDiv.style.color = '#999';
+                                subtitleDiv.style.fontWeight = 'normal';
+                                subtitleDiv.textContent = item.subtitle;
+                                labelCol.appendChild(labelText);
+                                labelCol.appendChild(subtitleDiv);
+                            } else {
+                                labelCol.appendChild(labelText);
+                            }
+                            labelCol.style.cursor = 'pointer';
+                            labelCol.addEventListener('click', () => {
+                                checkbox.checked = !checkbox.checked;
+                                this.toggleItem(item.id);
+                                this.updateItemUI(item.id);
+                            });
+
+                            const contentCol = document.createElement('div');
+                            contentCol.className = 'content-col';
+                            contentCol.innerHTML = item.content;
+                            if (item.tips && item.tips.length > 0) {
+                                item.tips.forEach(tip => {
+                                    const tipDiv = document.createElement('div');
+                                    tipDiv.className = 'tip';
+                                    tipDiv.innerHTML = '• ' + tip;
+                                    contentCol.appendChild(tipDiv);
+                                });
+                            }
+
+                            itemDiv.appendChild(checkboxCol);
+                            itemDiv.appendChild(labelCol);
+                            itemDiv.appendChild(contentCol);
+                            sectionDiv.appendChild(itemDiv);
+                        });
+                    });
+
+                    container.appendChild(sectionDiv);
+                });
+
+                this.updateProgress();
+            }
+
+            updateItemUI(id) {
+                const items = document.querySelectorAll('.checklist-item');
+                items.forEach(item => {
+                    const checkbox = item.querySelector('input[type="checkbox"]');
+                    if (checkbox && this.checkboxStates[id]) {
+                        // Find the item by looking at all items and checking their state
+                        const itemIndex = Array.from(items).indexOf(item);
+                        const allItems = this.getAllItems();
+                        if (itemIndex < allItems.length && allItems[itemIndex].id === id) {
+                            if (this.checkboxStates[id]) {
+                                item.classList.add('checked');
+                            } else {
+                                item.classList.remove('checked');
+                            }
+                        }
+                    }
+                });
+                // More reliable: find and update based on the checkbox state
+                document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                    const item = checkbox.closest('.checklist-item');
+                    if (item) {
+                        if (checkbox.checked) {
+                            item.classList.add('checked');
+                        } else {
+                            item.classList.remove('checked');
+                        }
+                    }
+                });
+                this.updateProgress();
+            }
+        }
+
+        const manager = new ChecklistManager();
+        manager.render();
+
+        document.getElementById('resetButton').addEventListener('click', () => {
+            manager.reset();
+        });
+    </script>
+</body>
+</html>
